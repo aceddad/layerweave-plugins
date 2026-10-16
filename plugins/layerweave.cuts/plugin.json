@@ -1,0 +1,30 @@
+{
+  "format": 1,
+  "kind": "view-plugin",
+  "publisher": "layerweave",
+  "name": "cuts",
+  "version": "1.0.0",
+  "label": "接缝",
+  "description": "并排查看同一轨道前后相接的画面，沿接缝跳转。",
+  "requires": {
+    "view": ">=0.27.0",
+    "host_api": [
+      3
+    ]
+  },
+  "entry": "dist/plugin.js",
+  "usage": "README.md",
+  "slots": [
+    "page",
+    "jumpPoints"
+  ],
+  "params": {},
+  "author": "LayerWeave",
+  "languages": [
+    "zh"
+  ],
+  "handles": [
+    "image",
+    "video"
+  ]
+}

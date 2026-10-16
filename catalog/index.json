@@ -1,0 +1,65 @@
+{
+  "format": 1,
+  "plugins": [
+    {
+      "publisher": "layerweave",
+      "name": "assets",
+      "kind": "view-plugin",
+      "version": "1.0.0",
+      "label": "一览",
+      "description": "按种类分页查看项目中的图片、视频、音频和文字。",
+      "requires": {
+        "view": ">=0.27.0",
+        "host_api": [
+          3
+        ]
+      },
+      "id": "layerweave.assets",
+      "archive": {
+        "url": "releases/layerweave.assets-1.0.0.zip",
+        "size": 3379,
+        "sha256": "db74df5b256144a7634ef8c933489f082ec4ea60c1499b624a6bac9f9b81493f"
+      }
+    },
+    {
+      "publisher": "layerweave",
+      "name": "cuts",
+      "kind": "view-plugin",
+      "version": "1.0.0",
+      "label": "接缝",
+      "description": "并排查看同一轨道前后相接的画面，沿接缝跳转。",
+      "requires": {
+        "view": ">=0.27.0",
+        "host_api": [
+          3
+        ]
+      },
+      "id": "layerweave.cuts",
+      "archive": {
+        "url": "releases/layerweave.cuts-1.0.0.zip",
+        "size": 3969,
+        "sha256": "83692db49906e83a852dd9312d498ac36d4dd2891498ea06996fca0ae68b4e68"
+      }
+    },
+    {
+      "publisher": "layerweave",
+      "name": "preview",
+      "kind": "view-plugin",
+      "version": "1.0.0",
+      "label": "预览",
+      "description": "按时间取帧，分页检查视频、动态 SVG 和动态图像。",
+      "requires": {
+        "view": ">=0.27.0",
+        "host_api": [
+          3
+        ]
+      },
+      "id": "layerweave.preview",
+      "archive": {
+        "url": "releases/layerweave.preview-1.0.0.zip",
+        "size": 7010,
+        "sha256": "0e72f834abe4f0937d3f2ac830f7c7811c7a8733f2058b8ca7e2f6028b176c0c"
+      }
+    }
+  ]
+}

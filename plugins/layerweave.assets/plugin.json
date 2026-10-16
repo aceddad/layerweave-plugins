@@ -1,0 +1,36 @@
+{
+  "format": 1,
+  "kind": "view-plugin",
+  "publisher": "layerweave",
+  "name": "assets",
+  "version": "1.0.0",
+  "label": "一览",
+  "description": "按种类分页查看项目中的图片、视频、音频和文字。",
+  "requires": {
+    "view": ">=0.27.0",
+    "host_api": [
+      3
+    ]
+  },
+  "entry": "dist/plugin.js",
+  "usage": "README.md",
+  "slots": [
+    "page"
+  ],
+  "params": {
+    "page": {
+      "type": "integer",
+      "default": 1,
+      "description": "页码，从 1 开始。"
+    },
+    "per": {
+      "type": "integer",
+      "default": 60,
+      "description": "每页项目数。"
+    }
+  },
+  "author": "LayerWeave",
+  "languages": [
+    "zh"
+  ]
+}

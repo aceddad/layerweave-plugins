@@ -1,0 +1,58 @@
+{
+  "format": 1,
+  "kind": "view-plugin",
+  "publisher": "layerweave",
+  "name": "preview",
+  "version": "1.0.0",
+  "label": "预览",
+  "description": "按时间取帧，分页检查视频、动态 SVG 和动态图像。",
+  "requires": {
+    "view": ">=0.27.0",
+    "host_api": [
+      3
+    ]
+  },
+  "entry": "dist/plugin.js",
+  "usage": "README.md",
+  "slots": [
+    "page"
+  ],
+  "params": {
+    "page": {
+      "type": "integer",
+      "default": 1,
+      "description": "页码，从 1 开始。"
+    },
+    "per": {
+      "type": "integer",
+      "default": 48,
+      "description": "每页项目数。"
+    },
+    "object": {
+      "type": "integer",
+      "description": "媒体对象编号；省略时展示候选对象。"
+    },
+    "from": {
+      "type": "number",
+      "default": 0,
+      "description": "起始秒数。"
+    },
+    "step": {
+      "type": "string",
+      "default": "1f",
+      "description": "取帧间隔，如 1f、3f、0.5s。"
+    },
+    "fps": {
+      "type": "number",
+      "description": "手动帧率；省略时优先检测视频，其他情况使用 24。"
+    }
+  },
+  "author": "LayerWeave",
+  "languages": [
+    "zh"
+  ],
+  "handles": [
+    "image",
+    "video"
+  ]
+}
