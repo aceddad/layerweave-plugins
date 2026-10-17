@@ -22,6 +22,16 @@ def package(folder, output):
     files = {folder / "plugin.json", folder / data.get("usage", "README.md")}
     if data.get("license_file"):
         files.add(folder / data["license_file"])
+    for relative in data.get("locales", {}).values():
+        path = folder / relative
+        if not path.resolve().is_relative_to(folder) or path.is_symlink():
+            raise ValueError(f"语言文件越界：{relative}")
+        pack = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(pack.get("messages"), dict) or not all(isinstance(v, str) for v in pack["messages"].values()):
+            raise ValueError("messages 必须是字符串映射")
+        files.add(path)
+        if pack.get("usage"):
+            files.add(folder / pack["usage"])
     files.update(p for p in (folder / "dist").rglob("*") if p.is_file())
     entry = folder / data.get("entry", "plugin.js")
     if entry not in files:

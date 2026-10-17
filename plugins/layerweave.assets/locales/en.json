@@ -1,0 +1,25 @@
+{
+  "messages": {
+    "filters.all": "All",
+    "kind.image": "Image",
+    "kind.video": "Video",
+    "kind.audio": "Audio",
+    "kind.text": "Text",
+    "media.missing": "File not found",
+    "object.unnamed": "Object {value1}",
+    "layer.unnamed": "Layer {value1}",
+    "assets.empty": "No items of this type.",
+    "plugin.label": "Assets",
+    "plugin.title": "Browse project images, videos, audio and text by type, one page at a time. Click an item to go to it on the canvas."
+  },
+  "display": {
+    "label": "Assets",
+    "title": "Browse project images, videos, audio and text by type, one page at a time. Click an item to go to it on the canvas.",
+    "description": "Browse project images, videos, audio and text by type, one page at a time.",
+    "params": {
+      "page": "Page number, starting at 1.",
+      "per": "Items per page."
+    }
+  },
+  "usage": "README.en.md"
+}

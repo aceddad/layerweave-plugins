@@ -23,6 +23,40 @@
     },
     {
       "publisher": "layerweave",
+      "name": "assets",
+      "kind": "view-plugin",
+      "version": "1.1.0",
+      "label": "一览",
+      "description": "按种类分页查看项目中的图片、视频、音频和文字。",
+      "requires": {
+        "view": ">=0.29.0",
+        "host_api": [
+          3
+        ]
+      },
+      "localizations": {
+        "zh": {
+          "display": {
+            "label": "一览",
+            "description": "按种类分页查看项目中的图片、视频、音频和文字。"
+          }
+        },
+        "en": {
+          "display": {
+            "label": "Assets",
+            "description": "Browse project images, videos, audio and text by type, one page at a time."
+          }
+        }
+      },
+      "id": "layerweave.assets",
+      "archive": {
+        "url": "releases/layerweave.assets-1.1.0.zip",
+        "size": 5436,
+        "sha256": "10c4f0720d8c582f3a4164d7ee2c9cb220ebfb0a75e179a537d2ae9c2bbba120"
+      }
+    },
+    {
+      "publisher": "layerweave",
       "name": "cuts",
       "kind": "view-plugin",
       "version": "1.0.0",
@@ -43,6 +77,40 @@
     },
     {
       "publisher": "layerweave",
+      "name": "cuts",
+      "kind": "view-plugin",
+      "version": "1.1.0",
+      "label": "接缝",
+      "description": "并排查看同一轨道前后相接的画面，沿接缝跳转。",
+      "requires": {
+        "view": ">=0.29.0",
+        "host_api": [
+          3
+        ]
+      },
+      "localizations": {
+        "zh": {
+          "display": {
+            "label": "接缝",
+            "description": "并排查看同一轨道前后相接的画面，沿接缝跳转。"
+          }
+        },
+        "en": {
+          "display": {
+            "label": "Cuts",
+            "description": "Compare adjacent visuals on a track and jump between cuts."
+          }
+        }
+      },
+      "id": "layerweave.cuts",
+      "archive": {
+        "url": "releases/layerweave.cuts-1.1.0.zip",
+        "size": 6046,
+        "sha256": "6115d064a8fa165ea1b36b72b53ee100fa525b373aebedb03d19fce92629db1c"
+      }
+    },
+    {
+      "publisher": "layerweave",
       "name": "preview",
       "kind": "view-plugin",
       "version": "1.0.0",
@@ -59,6 +127,40 @@
         "url": "releases/layerweave.preview-1.0.0.zip",
         "size": 7010,
         "sha256": "0e72f834abe4f0937d3f2ac830f7c7811c7a8733f2058b8ca7e2f6028b176c0c"
+      }
+    },
+    {
+      "publisher": "layerweave",
+      "name": "preview",
+      "kind": "view-plugin",
+      "version": "1.1.0",
+      "label": "预览",
+      "description": "按时间取帧，分页检查视频、动态 SVG 和动态图像。",
+      "requires": {
+        "view": ">=0.29.0",
+        "host_api": [
+          3
+        ]
+      },
+      "localizations": {
+        "zh": {
+          "display": {
+            "label": "预览",
+            "description": "按时间取帧，分页检查视频、动态 SVG 和动态图像。"
+          }
+        },
+        "en": {
+          "display": {
+            "label": "Frame Preview",
+            "description": "Inspect frames of videos, animated SVGs and animated images by time."
+          }
+        }
+      },
+      "id": "layerweave.preview",
+      "archive": {
+        "url": "releases/layerweave.preview-1.1.0.zip",
+        "size": 10223,
+        "sha256": "c47a70d818d9e0391940a7c36ce3538897ee59fcb55cf6e051378b7dd913aec8"
       }
     }
   ]

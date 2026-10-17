@@ -1,9 +1,12 @@
 """发布文件的可重复性、哈希和真正离线选装；需要已安装的 LayerWeave 视图。"""
 import hashlib
 import json
+import re
+import zipfile
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from layerweave.tool.builtin.view.plugins import plugin
 from tools.package_plugin import package
@@ -30,6 +33,30 @@ class CatalogTests(unittest.TestCase):
                 self.assertEqual(result["status"], "installed")
                 self.assertIsNone(next(p for p in result["plugins"] if p["id"] == row["id"])["problem"])
                 self.assertTrue(plugin("info", row["id"], root=folder / "state")["usage"])
+
+    def test_old_host_selects_previous_release(self):
+        with tempfile.TemporaryDirectory() as temporary, patch('layerweave.tool.builtin.view.plugin_manifest.current_version', return_value='0.28.1'):
+            result=plugin('market',catalog=ROOT/'catalog/index.json',root=Path(temporary)/'state')
+            self.assertEqual(len(result['items']),3)
+            self.assertTrue(all(row['version']=='1.0.0' and row['compatible'] for row in result['items']))
+
+    def test_language_resources_are_complete_and_packed(self):
+        placeholders=lambda text: sorted(re.findall(r"\{(\w+)\}",text))
+        for folder in (ROOT/'plugins').iterdir():
+            packs={lang:json.loads((folder/'locales'/(lang+'.json')).read_text(encoding='utf-8')) for lang in ('zh','en')}
+            self.assertEqual(set(packs['zh']['messages']),set(packs['en']['messages']))
+            for key,text in packs['zh']['messages'].items():
+                self.assertEqual(placeholders(text),placeholders(packs['en']['messages'][key]),key)
+            with zipfile.ZipFile(ROOT/'catalog/releases'/f'{folder.name}-1.1.0.zip') as z:
+                self.assertIn('locales/en.json',z.namelist());self.assertIn('README.en.md',z.namelist())
+            meta=json.loads((folder/'plugin.json').read_text(encoding='utf-8'))
+            self.assertEqual(set(meta['params']),set(packs['en']['display']['params']))
+        catalogue=json.loads((ROOT/'catalog/index.json').read_text(encoding='utf-8'))
+        self.assertEqual(len(catalogue['plugins']),6)
+        for row in catalogue['plugins']:
+            if row['version']=='1.1.0':
+                self.assertIn('en',row['localizations'])
+                self.assertNotIn('messages',row['localizations']['en'])
 
 
 if __name__ == "__main__":

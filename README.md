@@ -10,7 +10,7 @@
 
 ## 选装
 
-需要带插件管理器的 LayerWeave 视图 0.28.0 或更新兼容版本：
+需要带插件管理器的 LayerWeave 视图 0.28.0 或更新兼容版本。插件 1.1.0 提供中英语言包，需要视图 0.29.0+；旧宿主仍可从目录选择 1.0.0：
 
 ```sh
 python -m layerweave.tool.builtin.view.plugins market
@@ -46,6 +46,12 @@ python -m layerweave.tool.builtin.view.plugins add plugins/layerweave.preview
 新增插件可参照任一现有目录：自己的 publisher/name、独立 version、用途和参数声明、README、src 和 dist。这几个字段不要求源码必须放在官方仓库，第三方也可以维护自己的仓库与目录。
 
 目录只登记 `catalog/releases/` 中的 ZIP；`_unfinished/` 保存未完成的参考材料，不构建、不进入目录、不发布为插件。Python 组件暂不在这里执行安装流程。
+
+## 语言包
+
+三个官方插件的 1.1.0 跟随宿主顶栏切换中文 / English，切换保留当前页、筛选和已解码帧。各插件的 `locales/zh.json` 与 `en.json` 保存界面词条、显示元数据和使用说明路径。原 manifest 身份和参数约定保持不变。
+
+组件内用 `host.useI18n()`，普通回调用 `host.t()`；不要把 locale 加进媒体解码 effect 的依赖。自己的词典缺英文时回退中文，未声明语言包的旧插件继续显示原文。完整格式见[语言包协议](https://gitee.com/emotion1354414/layer-weave/blob/visualization/src/layerweave/tool/builtin/view/LANGUAGES.md)。打包脚本只收集明确声明的语言文件和说明。
 
 ## 验收
 

@@ -15,7 +15,13 @@ def build(folder):
     for package in sorted((folder / "releases").rglob("*.zip")):
         with zipfile.ZipFile(package) as archive:
             meta = json.loads(archive.read("plugin.json"))
+            localizations = {}
+            for lang, relative in meta.get("locales", {}).items():
+                display = json.loads(archive.read(relative)).get("display", {})
+                localizations[lang] = {"display": {k: display[k] for k in ("label", "description") if k in display}}
         row = {key: meta[key] for key in FIELDS}
+        if localizations:
+            row["localizations"] = localizations
         row["id"] = meta["publisher"] + "." + meta["name"]
         key = row["id"], row["version"]
         if key in seen:

@@ -1,3 +1,4 @@
+const tr: PluginHost['t'] = (key, values) => host.t(key, values);
 // 默认逐帧缩略图；开始时刻、间隔（逐帧 / 每 N 帧 / 每 N 秒）、帧率可以改；一页一屏，截图拍一张就是一页，AI 用它自查一段。
 // 地址参数：object=对象编号、from=开始的秒、step=1f / 3f / 0.5s、fps=、per=、page=（截图 --param object=812 --param step=1f）。
 import type {PluginHost, ViewPlugin} from '../../../sdk/host-api-3';
@@ -14,14 +15,21 @@ const SIZES = [24, 48, 96];
 const STEPS = ['1f', '2f', '5f', '0.5s', '1s'];
 const query = new URLSearchParams(location.search);
 
+type Message = {key: string; stage?: string};
+class LocalizedError extends Error {
+  constructor(readonly ui: Message) { super(ui.key); }
+}
+const failure = (error: unknown): Message | string => error instanceof LocalizedError ? error.ui : (error as Error).message || String(error);
+const displayMessage = (message: Message | string) => typeof message === 'string' ? message : tr(message.key) + (message.stage ? ': ' + tr(message.stage) : '');
+
 type Source =
   | {kind: 'video'; duration: number; fps: number | null; aspect: number}
   | {kind: 'svg'; duration: number; text: string; still: boolean; aspect: number}
   | {kind: 'frames'; duration: number; starts: number[]; decoder: any; aspect: number}
-  | {kind: 'still'; message: string}
-  | {kind: 'error'; message: string};
+  | {kind: 'still'; message: Message | string}
+  | {kind: 'error'; message: Message | string};
 
-const nameOf = (o: ObjWithLayer) => o.name || (o.media?.source || '').split(/[\\/]/).pop() || `对象 ${o.id}`;
+const nameOf = (o: ObjWithLayer) => o.name || (o.media?.source || '').split(/[\\/]/).pop() || tr("object.unnamed", {value1: o.id});
 const urlOf = (o: ObjWithLayer) => host.util.mediaUrl(o.media!.url!, o.media?.source);
 const fileOf = (o: ObjWithLayer) => o.media?.source || o.media?.url || '';
 
@@ -33,10 +41,10 @@ function candidates(objects: ObjWithLayer[], picked: number[]): ObjWithLayer[] {
 }
 
 const timeout = <T,>(p: Promise<T>, ms: number, what: string) =>
-  Promise.race([p, new Promise<T>((_, reject) => setTimeout(() => reject(new Error(what + '超时')), ms))]);
+  Promise.race([p, new Promise<T>((_, reject) => setTimeout(() => reject(new LocalizedError({key: "preview.timeout", stage: what})), ms))]);
 const once = (el: EventTarget, ok: string) => new Promise<void>((resolve, reject) => {
   const done = () => { el.removeEventListener(ok, done); el.removeEventListener('error', fail); resolve(); };
-  const fail = () => { el.removeEventListener(ok, done); el.removeEventListener('error', fail); reject(new Error('文件读不出来')); };
+  const fail = () => { el.removeEventListener(ok, done); el.removeEventListener('error', fail); reject(new LocalizedError({key: "preview.unreadable"})); };
   el.addEventListener(ok, done); el.addEventListener('error', fail);
 });
 
@@ -52,7 +60,7 @@ async function measureFps(video: HTMLVideoElement): Promise<number | null> {
       };
       video.requestVideoFrameCallback(tick);
       video.play().catch(() => resolve());
-    }), 1500, '量帧率');
+    }), 1500, "preview.measureFps");
   } catch { /* 量不到就算了 */ }
   video.pause();
   const gaps = times.slice(1).map((t, i) => t - times[i]).filter((d) => d > 0.004 && d < 0.2).sort((a, b) => a - b);
@@ -63,12 +71,12 @@ async function loadSource(o: ObjWithLayer, video: HTMLVideoElement): Promise<Sou
   const url = urlOf(o), {kindOf} = host.util;
   if (kindOf(o) === 'video') {
     video.muted = true; video.preload = 'auto'; video.src = url;
-    await timeout(once(video, 'loadeddata'), 20000, '读视频');
+    await timeout(once(video, 'loadeddata'), 20000, "preview.readVideo");
     const fps = await measureFps(video);
     return {kind: 'video', duration: video.duration, fps, aspect: video.videoWidth / Math.max(1, video.videoHeight)};
   }
   const response = await fetch(url);
-  if (!response.ok) throw new Error('文件读不出来');
+  if (!response.ok) throw new LocalizedError({key: "preview.unreadable"});
   if (/\.svg$/i.test(fileOf(o).split(/[?#]/)[0]) || response.headers.get('content-type')?.includes('svg')) {
     const text = await response.text(), still = !svgAnimated(text);
     const box = /viewBox\s*=\s*["']\s*[-\d.]+[\s,]+[-\d.]+[\s,]+([\d.]+)[\s,]+([\d.]+)/i.exec(text);
@@ -76,12 +84,12 @@ async function loadSource(o: ObjWithLayer, video: HTMLVideoElement): Promise<Sou
             aspect: box ? Number(box[1]) / Math.max(1, Number(box[2])) : 1};
   }
   const Decoder = (globalThis as any).ImageDecoder;
-  if (!Decoder) return {kind: 'error', message: '这个浏览器不支持逐帧读图（没有 ImageDecoder）'};
+  if (!Decoder) return {kind: 'error', message: {key: "preview.noDecoder"}};
   const type = response.headers.get('content-type') || ({gif: 'image/gif', webp: 'image/webp', png: 'image/png', apng: 'image/apng'} as Record<string, string>)[fileOf(o).split('.').pop()!.toLowerCase()] || 'image/gif';
   const decoder = new Decoder({data: await response.arrayBuffer(), type});
   await decoder.tracks.ready;
   const count = Math.min(5000, decoder.tracks.selectedTrack?.frameCount ?? 1);
-  if (count <= 1) { decoder.close(); return {kind: 'still', message: '这张图不会动'}; }
+  if (count <= 1) { decoder.close(); return {kind: 'still', message: {key: "preview.staticImage"}}; }
   const starts: number[] = [];
   let at = 0, aspect = 1;
   for (let i = 0; i < count; i++) {
@@ -121,6 +129,7 @@ function contain(ctx: CanvasRenderingContext2D, source: CanvasImageSource, sw: n
 }
 
 function PreviewPage() {
+  const {locale} = host.useI18n();
   const {React} = host, {model, selected, picked} = host.useView();
   const list = React.useMemo(() => (model ? candidates(model.allObjects(), picked) : []), [model, picked]);
   const [objectId, setObjectId] = React.useState<number | null>(() => host.numParam('object') ?? null);
@@ -133,6 +142,8 @@ function PreviewPage() {
   const [done, setDone] = React.useState(0);
   const video = React.useRef<HTMLVideoElement | null>(null);
   const cells = React.useRef<(HTMLCanvasElement | HTMLDivElement | null)[]>([]);
+  const frameErrors = React.useRef(new Map<number, Message | string>());
+  React.useEffect(() => { for (const [index, error] of frameErrors.current) { const cell = cells.current[index]; if (cell) cell.title = displayMessage(error); } }, [locale]);
   const o = list.find((x) => x.id === objectId) ?? list.find((x) => x.id === selected) ?? list[0] ?? null;
 
   // 换了对象：读文件、量帧率、数帧
@@ -143,7 +154,7 @@ function PreviewPage() {
     setSource(null); setDone(0);
     const el = video.current ?? (video.current = document.createElement('video'));
     loadSource(o, el).then((s) => { if (alive) setSource(s); })
-      .catch((error) => { if (alive) setSource({kind: 'error', message: (error as Error).message}); });
+      .catch((error) => { if (alive) setSource({kind: 'error', message: failure(error)}); });
     return () => { alive = false; };
   }, [model != null, o?.id]);
 
@@ -160,7 +171,7 @@ function PreviewPage() {
     if (!source) return;
     if (!shown.items.length) { host.markReady(); return; }
     let alive = true;
-    setDone(0);
+    setDone(0); frameErrors.current.clear();
     (async () => {
       for (let i = 0; i < shown.items.length && alive; i++) {
         const shot = shown.items[i], cell = cells.current[i];
@@ -169,7 +180,7 @@ function PreviewPage() {
           if (source.kind === 'video') {
             const v = video.current!;
             v.currentTime = Math.min(shot.t, Math.max(0, source.duration - 0.001));
-            await timeout(once(v, 'seeked'), 8000, '跳到这一帧');
+            await timeout(once(v, 'seeked'), 8000, "preview.seek");
             if (!alive) break;
             contain((cell as HTMLCanvasElement).getContext('2d')!, v, v.videoWidth, v.videoHeight);
             cell.dataset.t = String(v.currentTime);
@@ -184,7 +195,8 @@ function PreviewPage() {
           cell.dataset.state = 'ready';
         } catch (error) {
           cell.dataset.state = 'failed';
-          cell.title = (error as Error).message;
+          frameErrors.current.set(i, failure(error));
+          cell.title = displayMessage(failure(error));
         }
         if (alive) setDone(i + 1);
       }
@@ -196,28 +208,28 @@ function PreviewPage() {
   if (!model) return null;
   const {fmt} = host.util, {Pager} = host.components;
   const aspect = source && 'aspect' in source && source.aspect > 0 ? source.aspect : 16 / 9;
-  const status = !o ? (picked.length ? '勾选的层里没有视频或会动的图' : '项目里没有视频或会动的图')
-    : !source ? '正在读文件……'
-    : source.kind === 'error' || source.kind === 'still' ? source.message
-    : source.kind === 'svg' && source.still ? '这张 SVG 不会动'
-    : done < shown.items.length ? `正在取帧 ${done} / ${shown.items.length}` : '';
+  const status = !o ? (picked.length ? tr("preview.emptySelection") : tr("preview.emptyProject"))
+    : !source ? tr("preview.reading")
+    : source.kind === 'error' || source.kind === 'still' ? displayMessage(source.message)
+    : source.kind === 'svg' && source.still ? tr("preview.staticSvg")
+    : done < shown.items.length ? tr("preview.progress", {value1: done, value2: shown.items.length}) : '';
   return (
     <main className="preview">
       <aside className="pv-list">
-        <div className="hint">{picked.length ? '勾选的层里' : '全部'} {list.length} 个</div>
+        <div className="hint">{picked.length ? tr("preview.selectedLayers") : tr("filters.all")} {list.length}  {tr("preview.countSuffix")}</div>
         {list.map((x) => <div key={x.id} className={`pv-item${x.id === o?.id ? ' on' : ''}`} title={`#${x.id} ${fileOf(x)}`}
                                onClick={() => { setObjectId(x.id); setPage(1); }}>{nameOf(x)}<small>{x.layer.name}</small></div>)}
       </aside>
       <section className="pv-main">
         <div className="pv-bar">
-          <strong>{o ? nameOf(o) : '预览'}</strong>
-          <label>开始 <input type="number" min={0} step={0.1} value={from} onChange={(e) => { setFrom(Math.max(0, Number(e.target.value) || 0)); setPage(1); }} /> 秒</label>
-          <label>间隔 <select value={stepText(step)} onChange={(e) => { setStep(parseStep(e.target.value)!); setPage(1); }}>
-            {[...new Set([...STEPS, stepText(step)])].map((s) => <option key={s} value={s}>{s === '1f' ? '逐帧' : s.endsWith('f') ? `每 ${parseInt(s)} 帧` : `每 ${parseFloat(s)} 秒`}</option>)}
+          <strong>{o ? nameOf(o) : tr("preview.select")}</strong>
+          <label>{tr("preview.start")} <input type="number" min={0} step={0.1} value={from} onChange={(e) => { setFrom(Math.max(0, Number(e.target.value) || 0)); setPage(1); }} />  {tr("time.seconds")}</label>
+          <label>{tr("preview.interval")} <select value={stepText(step)} onChange={(e) => { setStep(parseStep(e.target.value)!); setPage(1); }}>
+            {[...new Set([...STEPS, stepText(step)])].map((s) => <option key={s} value={s}>{s === '1f' ? tr("preview.everyFrame") : s.endsWith('f') ? tr("preview.everyFrames", {value1: parseInt(s)}) : tr("preview.everySeconds", {value1: parseFloat(s)})}</option>)}
           </select></label>
-          {source?.kind !== 'frames' && <label title="视频按实际的帧率（播几帧量出来）；量不到时用 24">帧率 <input type="number" min={1} max={240} value={rate}
+          {source?.kind !== 'frames' && <label title={tr("preview.fpsHint")}>{tr("preview.fps")} <input type="number" min={1} max={240} value={rate}
             onChange={(e) => { setFps(Math.max(1, Number(e.target.value) || 24)); setPage(1); }} /></label>}
-          {source && 'duration' in source && <span className="hint">共 {fmt(source.duration, '秒')}</span>}
+          {source && 'duration' in source && <span className="hint">{tr("preview.total")} {fmt(source.duration, '秒')}</span>}
           <span className="spacer" />
           <Pager total={all.length} page={shown.page} per={per} onPage={setPage} sizes={SIZES} onPer={(n) => { setPer(n); setPage(1); }} />
         </div>
@@ -229,7 +241,7 @@ function PreviewPage() {
                 ? <div className="pv-cell" ref={(el) => { cells.current[i] = el; }} style={{aspectRatio: String(aspect)}} />
                 : <canvas className="pv-cell" ref={(el) => { cells.current[i] = el; }} width={Math.round(320 * Math.min(2, devicePixelRatio))}
                           height={Math.round(320 * Math.min(2, devicePixelRatio) / aspect)} style={{aspectRatio: String(aspect)}} />}
-              <figcaption>{fmt(shot.t, '秒')} · 第 {shot.frame} 帧</figcaption>
+              <figcaption>{tr('preview.frameCaption', {time: fmt(shot.t, '秒'), frame: shot.frame})}</figcaption>
             </figure>
           ))}
         </div>

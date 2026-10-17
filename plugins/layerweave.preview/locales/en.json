@@ -1,0 +1,48 @@
+{
+  "messages": {
+    "object.unnamed": "Object {value1}",
+    "preview.timeout": "Timed out",
+    "preview.unreadable": "Could not read the file",
+    "preview.measureFps": "Measuring frame rate",
+    "preview.readVideo": "Reading video",
+    "preview.noDecoder": "This browser cannot decode image frames (ImageDecoder is unavailable)",
+    "preview.staticImage": "This image is not animated",
+    "preview.seek": "Seeking frame",
+    "preview.emptySelection": "No videos or animated images in the selected layers",
+    "preview.emptyProject": "No videos or animated images in this project",
+    "preview.reading": "Reading file…",
+    "preview.staticSvg": "This SVG is not animated",
+    "preview.progress": "Extracting frames {value1} / {value2}",
+    "preview.selectedLayers": "Selected layers",
+    "filters.all": "All",
+    "preview.countSuffix": " items",
+    "plugin.label": "Frame Preview",
+    "preview.start": "Start",
+    "time.seconds": "s",
+    "preview.interval": "Interval",
+    "preview.everyFrame": "Every frame",
+    "preview.everyFrames": "Every {value1} frames",
+    "preview.everySeconds": "Every {value1} s",
+    "preview.fpsHint": "Measured from video playback; defaults to 24 if unavailable",
+    "preview.fps": "FPS",
+    "preview.total": "Total:",
+    "preview.framePrefix": "· Frame",
+    "preview.frameSuffix": "",
+    "plugin.title": "Browse frames of videos, animated SVGs and GIFs. Adjust the start and interval; one page per capture.",
+    "preview.frameCaption": "{time} · Frame {frame}"
+  },
+  "display": {
+    "label": "Frame Preview",
+    "title": "Browse frames of videos, animated SVGs and GIFs. Adjust the start and interval; one page per capture.",
+    "description": "Inspect frames of videos, animated SVGs and animated images by time.",
+    "params": {
+      "page": "Page number, starting at 1.",
+      "per": "Items per page.",
+      "object": "Media object ID; omit to browse candidates.",
+      "from": "Start time in seconds.",
+      "step": "Frame interval, such as 1f, 3f or 0.5s.",
+      "fps": "Manual frame rate; otherwise measure video FPS, falling back to 24."
+    }
+  },
+  "usage": "README.en.md"
+}

@@ -3,11 +3,11 @@
   "kind": "view-plugin",
   "publisher": "layerweave",
   "name": "assets",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "label": "一览",
   "description": "按种类分页查看项目中的图片、视频、音频和文字。",
   "requires": {
-    "view": ">=0.27.0",
+    "view": ">=0.29.0",
     "host_api": [
       3
     ]
@@ -31,6 +31,11 @@
   },
   "author": "LayerWeave",
   "languages": [
-    "zh"
-  ]
+    "zh",
+    "en"
+  ],
+  "locales": {
+    "zh": "locales/zh.json",
+    "en": "locales/en.json"
+  }
 }

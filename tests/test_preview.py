@@ -63,7 +63,7 @@ class PreviewTests(unittest.TestCase):
                 ids = {name: write.create("object", {"layer": layer, "begin": i * 10, "end": i * 10 + 2, "config_ref": "objects/image.toml",
                                                      "information": {"source": str(root / name)}}, project_id=project)["id"]
                        for i, name in enumerate(("move.svg", "blink.gif"))}
-            plugin("install", file=Path(__file__).resolve().parents[1] / "catalog/releases/layerweave.preview-1.0.0.zip", root=root / "state")                         # 测试只安装到临时目录
+            plugin("install", file=Path(__file__).resolve().parents[1] / "catalog/releases/layerweave.preview-1.1.0.zip", root=root / "state")                         # 测试只安装到临时目录
             server, url = make_server(database, state_root=root / "state", record_state=False)
             threading.Thread(target=server.serve_forever, daemon=True).start()
             profile = root / "browser"
@@ -88,6 +88,14 @@ class PreviewTests(unittest.TestCase):
                 self.assertEqual(_ev(tab, "document.querySelectorAll('.pv-cell script').length"), 0)
                 self.assertEqual(_ev(tab, "document.querySelector('.pv-list .pv-item.on').textContent.startsWith('move')"), True)
                 self.assertIn("第 1 / 1 页", _ev(tab, "document.querySelector('.pager').textContent"))
+                _ev(tab, "(()=>{window.firstCell=document.querySelector('.pv-cell');window.reframes=0;const old=SVGSVGElement.prototype.setCurrentTime;SVGSVGElement.prototype.setCurrentTime=function(...args){window.reframes++;return old.apply(this,args)};return true;})()")
+                _ev(tab, "(()=>{const el=document.querySelector('.language');el.value='en';el.dispatchEvent(new Event('change',{bubbles:true}));return true;})()")
+                self.wait(tab,"document.querySelector('.pager').textContent.includes('Page 1 / 1')")
+                self.assertTrue(_ev(tab,"window.firstCell===document.querySelector('.pv-cell')"))
+                self.assertEqual(_ev(tab,"window.reframes"),0)
+                self.assertEqual(_ev(tab,"[...document.querySelectorAll('.pv-cell #box')].map(r=>Math.round(r.x.animVal.value))"),xs)
+                _ev(tab, "(()=>{const el=document.querySelector('.language');el.value='zh';el.dispatchEvent(new Event('change',{bubbles:true}));return true;})()")
+                self.wait(tab,"document.querySelector('.pager').textContent.includes('第 1 / 1 页')")
 
                 # GIF：逐帧就是真实的三帧，颜色 红 / 蓝 / 红
                 tab.call("Page.navigate", url=url + f"?project={project}&record=0&view=layerweave.preview&object={ids['blink.gif']}")

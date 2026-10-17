@@ -1,0 +1,28 @@
+{
+  "messages": {
+    "media.missing": "文件不存在",
+    "media.noFile": "没有文件",
+    "frame.last": "最后一帧",
+    "frame.first": "第一帧",
+    "kind.image": "图片",
+    "cut.boardTime": "（画板 {value1}）",
+    "cut.adjacent": "紧接",
+    "cut.gap": "中间空 {value1}",
+    "cut.overlap": "叠了 {value1}",
+    "cut.of": "的",
+    "cut.endsAt": "结束于",
+    "cut.crossSegment": "跨段：",
+    "cut.beginsAt": "开始于",
+    "cuts.empty": "没有接缝：同一条轨道里至少要有前后两个图片或视频。",
+    "cuts.countSuffix": "个接缝",
+    "plugin.label": "接缝",
+    "plugin.title": "同一条轨道里前后相接的画面：上一段的最后一帧和下一段的第一帧并排"
+  },
+  "display": {
+    "label": "接缝",
+    "title": "同一条轨道里前后相接的画面：上一段的最后一帧和下一段的第一帧并排",
+    "description": "并排查看同一轨道前后相接的画面，沿接缝跳转。",
+    "params": {}
+  },
+  "usage": "README.md"
+}

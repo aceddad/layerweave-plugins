@@ -96,21 +96,42 @@ class OfficialPageTests(unittest.TestCase):
             self.assertIn('第 1 / 2 页', _ev(tab, "document.querySelector('.pager').textContent"))
             _ev(tab, "[...document.querySelectorAll('.pager button')].find(b=>b.title==='下一页' || b.textContent.includes('›')).click()")
             self.wait(tab, "document.querySelectorAll('.grid .tile').length===5")
+            _ev(tab, "window.firstTile=document.querySelector('.tile');window.styleCount=document.querySelectorAll('style').length")
+            _ev(tab, "(()=>{const el=document.querySelector('.language');el.value='en';el.dispatchEvent(new Event('change',{bubbles:true}));return true;})()")
+            self.wait(tab, "document.querySelector('.pager').textContent.includes('Page 2 / 2')")
+            self.assertEqual(_ev(tab, "document.querySelectorAll('.tile').length"),5)
+            self.assertTrue(_ev(tab, "window.firstTile===document.querySelector('.tile')"))
+            self.assertTrue(_ev(tab, "window.styleCount===document.querySelectorAll('style').length"))
+            self.assertIn('Assets',_ev(tab,"document.querySelector('.bar .tabs').textContent"))
+            self.assertIn('图 60',_ev(tab,"document.querySelector('.tile').textContent"))
 
     def test_cuts_and_paginated_screenshots(self):
         for name in ('cuts', 'assets'):
-            plugin('install', file=ROOT / f'catalog/releases/layerweave.{name}-1.0.0.zip', root=self.state)
+            plugin('install', file=ROOT / f'catalog/releases/layerweave.{name}-1.1.0.zip', root=self.state)
         with browser(self.database, self.state, self.root / 'browser') as (tab, url):
             tab.call('Page.navigate', url=url + f'?project={self.project}&view=layerweave.cuts&begin=0&end=3&tree=0')
             self.wait(tab, "document.querySelectorAll('.cut').length===3")
             self.assertIn('紧接', _ev(tab, "document.querySelector('.cut').textContent"))
+            _ev(tab, "window.firstCut=document.querySelector('.cut');true")
+            _ev(tab, "(()=>{const el=document.querySelector('.language');el.value='en';el.dispatchEvent(new Event('change',{bubbles:true}));return true;})()")
+            self.wait(tab, "document.querySelector('.cut').textContent.includes('Adjacent')")
+            self.assertTrue(_ev(tab,"window.firstCut===document.querySelector('.cut')"))
         shot = capture(self.database, self.project, self.root / 'cuts.png', view='layerweave.cuts', begin=0, end=3,
-                       full_page=True, width=900, height=600, state_root=self.state)
+                       lang='en', full_page=True, width=900, height=600, state_root=self.state)
         self.assertTrue(shot['ready'])
         shot = capture(self.database, self.project, self.root / 'assets.png', view='layerweave.assets', params=['page=3', 'per=30'],
                        width=900, height=600, state_root=self.state)
         self.assertTrue(shot['ready'])
         self.assertIn('page=3', shot['page'])
+        self.assertIn('lang=zh',shot['page'])
+
+    def test_legacy_zip_loads_with_english_host(self):
+        plugin('install',file=ROOT/'catalog/releases/layerweave.assets-1.0.0.zip',root=self.state)
+        with browser(self.database,self.state,self.root/'legacy-browser') as (tab,url):
+            tab.call('Page.navigate',url=url+f'?project={self.project}&view=layerweave.assets&lang=en')
+            self.wait(tab,"document.querySelectorAll('.tile').length===60")
+            self.assertIn('Page 1 / 2',_ev(tab,"document.querySelector('.pager').textContent"))
+            self.assertIn('一览',_ev(tab,"document.querySelector('.bar .tabs').textContent"))
 
 
 if __name__ == '__main__':

@@ -1,0 +1,25 @@
+{
+  "messages": {
+    "filters.all": "全部",
+    "kind.image": "图片",
+    "kind.video": "视频",
+    "kind.audio": "音频",
+    "kind.text": "文字",
+    "media.missing": "文件不存在",
+    "object.unnamed": "对象 {value1}",
+    "layer.unnamed": "层 {value1}",
+    "assets.empty": "没有这类对象。",
+    "plugin.label": "一览",
+    "plugin.title": "按种类列出项目里所有的对象：图片、视频、音频、文字……分页；点一下回到画布上的位置"
+  },
+  "display": {
+    "label": "一览",
+    "title": "按种类列出项目里所有的对象：图片、视频、音频、文字……分页；点一下回到画布上的位置",
+    "description": "按种类分页查看项目中的图片、视频、音频和文字。",
+    "params": {
+      "page": "页码，从 1 开始。",
+      "per": "每页项目数。"
+    }
+  },
+  "usage": "README.md"
+}

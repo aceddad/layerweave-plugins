@@ -3,11 +3,11 @@
   "kind": "view-plugin",
   "publisher": "layerweave",
   "name": "preview",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "label": "预览",
   "description": "按时间取帧，分页检查视频、动态 SVG 和动态图像。",
   "requires": {
-    "view": ">=0.27.0",
+    "view": ">=0.29.0",
     "host_api": [
       3
     ]
@@ -49,10 +49,15 @@
   },
   "author": "LayerWeave",
   "languages": [
-    "zh"
+    "zh",
+    "en"
   ],
   "handles": [
     "image",
     "video"
-  ]
+  ],
+  "locales": {
+    "zh": "locales/zh.json",
+    "en": "locales/en.json"
+  }
 }

@@ -1,0 +1,28 @@
+{
+  "messages": {
+    "media.missing": "File not found",
+    "media.noFile": "No file",
+    "frame.last": "Last frame",
+    "frame.first": "First frame",
+    "kind.image": "Image",
+    "cut.boardTime": "(board {value1})",
+    "cut.adjacent": "Adjacent",
+    "cut.gap": "Gap: {value1}",
+    "cut.overlap": "Overlap: {value1}",
+    "cut.of": ": ",
+    "cut.endsAt": "ends at",
+    "cut.crossSegment": "Across segments: ",
+    "cut.beginsAt": "begins at",
+    "cuts.empty": "No cuts: a track needs at least two images or videos.",
+    "cuts.countSuffix": " cuts",
+    "plugin.label": "Cuts",
+    "plugin.title": "Adjacent visuals on one track: the previous segment's last frame beside the next segment's first frame"
+  },
+  "display": {
+    "label": "Cuts",
+    "title": "Adjacent visuals on one track: the previous segment's last frame beside the next segment's first frame",
+    "description": "Compare adjacent visuals on a track and jump between cuts.",
+    "params": {}
+  },
+  "usage": "README.en.md"
+}

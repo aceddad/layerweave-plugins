@@ -36,77 +36,80 @@ function n(t, n, r) {
 }
 //#endregion
 //#region plugins/layerweave.cuts/src/cuts.css?raw
-var r = "/* 接缝插件的样式：插件加载时由 host.addStyle 加进页面 */\n.cuts-view { flex: 1; overflow: auto; padding: 12px 16px; }\n.cut-group h3 { font-size: 13px; margin: 14px 0 8px; }\n.cut-group h3 small { color: var(--dim); font-weight: normal; }\n.cut { display: flex; align-items: center; gap: 12px; padding: 8px; margin-bottom: 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); cursor: pointer; }\n.cut:hover { border-color: var(--accent); }\n.cut figure { margin: 0; width: 320px; }\n.cut .shot { width: 320px; height: 180px; background: #0d0f13; border-radius: 4px; overflow: hidden; display: flex; align-items: center; justify-content: center; color: var(--dim); text-align: center; font-size: 12px; }\n.cut .shot img, .cut .shot video { width: 100%; height: 100%; object-fit: contain; }\n.cut .shot.missing { background: repeating-linear-gradient(45deg, #3a2a2a, #3a2a2a 6px, #2a1f1f 6px, #2a1f1f 12px); color: #f2b0b0; }\n.cut figcaption { font-size: 12px; margin-top: 4px; }\n.cut figcaption small { color: var(--dim); }\n.cut-mid { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 90px; color: var(--dim); font-size: 12px; text-align: center; }\n.cut-mid b { font-size: 22px; color: var(--accent); }\n.cut-mid .cross { color: #dfe8ff; }\nbody.full .cuts-view { overflow: visible; flex: none; }\n", i, a;
-function o({ model: e, it: t, end: n, project: r, frames: o }) {
-	let { Thumb: s, Frame: c } = i.components, { kindOf: l, lastAt: u, isSec: d } = i.util, f = t.o, p = e.unitOfRoot(t.root);
-	return f.media && !f.media.available ? /* @__PURE__ */ a("div", { className: "shot missing" }, "文件不存在", /* @__PURE__ */ a("br", null), f.media.source) : f.media?.url ? l(f) === "image" ? /* @__PURE__ */ a("div", { className: "shot" }, /* @__PURE__ */ a(s, {
+var r = "/* 接缝插件的样式：插件加载时由 host.addStyle 加进页面 */\n.cuts-view { flex: 1; overflow: auto; padding: 12px 16px; }\n.cut-group h3 { font-size: 13px; margin: 14px 0 8px; }\n.cut-group h3 small { color: var(--dim); font-weight: normal; }\n.cut { display: flex; align-items: center; gap: 12px; padding: 8px; margin-bottom: 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); cursor: pointer; }\n.cut:hover { border-color: var(--accent); }\n.cut figure { margin: 0; width: 320px; }\n.cut .shot { width: 320px; height: 180px; background: #0d0f13; border-radius: 4px; overflow: hidden; display: flex; align-items: center; justify-content: center; color: var(--dim); text-align: center; font-size: 12px; }\n.cut .shot img, .cut .shot video { width: 100%; height: 100%; object-fit: contain; }\n.cut .shot.missing { background: repeating-linear-gradient(45deg, #3a2a2a, #3a2a2a 6px, #2a1f1f 6px, #2a1f1f 12px); color: #f2b0b0; }\n.cut figcaption { font-size: 12px; margin-top: 4px; }\n.cut figcaption small { color: var(--dim); }\n.cut-mid { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 90px; color: var(--dim); font-size: 12px; text-align: center; }\n.cut-mid b { font-size: 22px; color: var(--accent); }\n.cut-mid .cross { color: #dfe8ff; }\nbody.full .cuts-view { overflow: visible; flex: none; }\n", i = (e, t) => a.t(e, t), a, o;
+function s({ model: e, it: t, end: n, project: r, frames: s }) {
+	a.useI18n();
+	let { Thumb: c, Frame: l } = a.components, { kindOf: u, lastAt: d, isSec: f } = a.util, p = t.o, m = e.unitOfRoot(t.root);
+	return p.media && !p.media.available ? /* @__PURE__ */ o("div", { className: "shot missing" }, i("media.missing"), /* @__PURE__ */ o("br", null), p.media.source) : p.media?.url ? u(p) === "image" ? /* @__PURE__ */ o("div", { className: "shot" }, /* @__PURE__ */ o(c, {
 		project: r,
-		o: f,
+		o: p,
 		width: 640,
-		frames: o
-	})) : /* @__PURE__ */ a("div", { className: "shot" }, /* @__PURE__ */ a(c, {
+		frames: s
+	})) : /* @__PURE__ */ o("div", { className: "shot" }, /* @__PURE__ */ o(l, {
 		project: r,
-		o: f,
-		at: n ? u(f, d(p)) : .05,
-		frames: o
-	})) : /* @__PURE__ */ a("div", { className: "shot missing" }, "没有文件");
+		o: p,
+		at: n ? d(p, f(m)) : .05,
+		frames: s
+	})) : /* @__PURE__ */ o("div", { className: "shot missing" }, i("media.noFile"));
 }
-function s({ model: e, cut: t, project: n, frames: r }) {
-	let { kindOf: s, fmt: c, fmtSpan: l } = i.util, u = e.unitOfRoot(t.a.root), d = (e, t) => s(e.o) === "video" ? t ? "最后一帧" : "第一帧" : "图片", f = (t, n) => c(n - t.offset, e.unitOfRoot(t.root)) + (t.offset ? `（画板 ${c(n, u)}）` : ""), p = Math.abs(t.gap) < 1e-6 ? "紧接" : t.gap > 0 ? `中间空 ${l(t.gap, u)}` : `叠了 ${l(-t.gap, u)}`, m = (e) => `#${e.o.id} ${e.o.name || (e.o.media?.source || "").split(/[\\/]/).pop()}`;
-	return /* @__PURE__ */ a("div", {
+function c({ model: e, cut: t, project: n, frames: r }) {
+	a.useI18n();
+	let { kindOf: c, fmt: l, fmtSpan: u } = a.util, d = e.unitOfRoot(t.a.root), f = (e, t) => c(e.o) === "video" ? i(t ? "frame.last" : "frame.first") : i("kind.image"), p = (t, n) => l(n - t.offset, e.unitOfRoot(t.root)) + (t.offset ? i("cut.boardTime", { value1: l(n, d) }) : ""), m = Math.abs(t.gap) < 1e-6 ? i("cut.adjacent") : t.gap > 0 ? i("cut.gap", { value1: u(t.gap, d) }) : i("cut.overlap", { value1: u(-t.gap, d) }), h = (e) => `#${e.o.id} ${e.o.name || (e.o.media?.source || "").split(/[\\/]/).pop()}`;
+	return /* @__PURE__ */ o("div", {
 		className: "cut",
-		onClick: () => i.selectObject(t.b.o.id)
-	}, /* @__PURE__ */ a("figure", null, /* @__PURE__ */ a(o, {
+		onClick: () => a.selectObject(t.b.o.id)
+	}, /* @__PURE__ */ o("figure", null, /* @__PURE__ */ o(s, {
 		model: e,
 		it: t.a,
 		end: !0,
 		project: n,
 		frames: r
-	}), /* @__PURE__ */ a("figcaption", null, m(t.a), " 的", d(t.a, !0), /* @__PURE__ */ a("br", null), /* @__PURE__ */ a("small", null, "结束于 ", f(t.a, t.a.end)))), /* @__PURE__ */ a("div", { className: "cut-mid" }, /* @__PURE__ */ a("b", null, "→"), /* @__PURE__ */ a("small", null, p), t.a.root !== t.b.root && /* @__PURE__ */ a("small", { className: "cross" }, "跨段：", e.nameOf(t.a.root), " → ", e.nameOf(t.b.root))), /* @__PURE__ */ a("figure", null, /* @__PURE__ */ a(o, {
+	}), /* @__PURE__ */ o("figcaption", null, h(t.a), "  ", i("cut.of"), f(t.a, !0), /* @__PURE__ */ o("br", null), /* @__PURE__ */ o("small", null, i("cut.endsAt"), " ", p(t.a, t.a.end)))), /* @__PURE__ */ o("div", { className: "cut-mid" }, /* @__PURE__ */ o("b", null, "→"), /* @__PURE__ */ o("small", null, m), t.a.root !== t.b.root && /* @__PURE__ */ o("small", { className: "cross" }, i("cut.crossSegment"), e.nameOf(t.a.root), " → ", e.nameOf(t.b.root))), /* @__PURE__ */ o("figure", null, /* @__PURE__ */ o(s, {
 		model: e,
 		it: t.b,
 		end: !1,
 		project: n,
 		frames: r
-	}), /* @__PURE__ */ a("figcaption", null, m(t.b), " 的", d(t.b, !1), /* @__PURE__ */ a("br", null), /* @__PURE__ */ a("small", null, "开始于 ", f(t.b, t.b.begin)))));
+	}), /* @__PURE__ */ o("figcaption", null, h(t.b), "  ", i("cut.of"), f(t.b, !1), /* @__PURE__ */ o("br", null), /* @__PURE__ */ o("small", null, i("cut.beginsAt"), " ", p(t.b, t.b.begin)))));
 }
-function c() {
-	let { model: n, boards: r, project: o, frames: c } = i.useView();
-	if (i.React.useEffect(() => {
-		n && i.markReady();
-	}, [n]), !n || o == null) return null;
-	let l = e(i.util, n, r, {
-		board: i.numParam("board"),
-		begin: i.numParam("begin"),
-		end: i.numParam("end")
-	}), u = /* @__PURE__ */ new Map();
-	for (let e of l) {
-		let n = t(i.util, e);
-		u.has(n) || u.set(n, []), u.get(n).push(e);
+function l() {
+	a.useI18n();
+	let { model: n, boards: r, project: s, frames: l } = a.useView();
+	if (a.React.useEffect(() => {
+		n && a.markReady();
+	}, [n]), !n || s == null) return null;
+	let u = e(a.util, n, r, {
+		board: a.numParam("board"),
+		begin: a.numParam("begin"),
+		end: a.numParam("end")
+	}), d = /* @__PURE__ */ new Map();
+	for (let e of u) {
+		let n = t(a.util, e);
+		d.has(n) || d.set(n, []), d.get(n).push(e);
 	}
-	return /* @__PURE__ */ a("main", { className: "cuts-view" }, !l.length && /* @__PURE__ */ a("p", { className: "hint" }, "没有接缝：同一条轨道里至少要有前后两个图片或视频。"), [...u.entries()].map(([e, t]) => {
-		let r = t[0], i = r.row.map((e) => n.nameOf(e)).join(" → ") + (r.track.key ? " · " + (r.track.name || r.track.type) : "");
-		return /* @__PURE__ */ a("section", {
+	return /* @__PURE__ */ o("main", { className: "cuts-view" }, !u.length && /* @__PURE__ */ o("p", { className: "hint" }, i("cuts.empty")), [...d.entries()].map(([e, t]) => {
+		let r = t[0], a = r.row.map((e) => n.nameOf(e)).join(" → ") + (r.track.key ? " · " + (r.track.name || r.track.type) : "");
+		return /* @__PURE__ */ o("section", {
 			key: e,
 			className: "cut-group"
-		}, /* @__PURE__ */ a("h3", null, i, " ", /* @__PURE__ */ a("small", null, t.length, " 个接缝")), t.map((e) => /* @__PURE__ */ a(s, {
+		}, /* @__PURE__ */ o("h3", null, a, " ", /* @__PURE__ */ o("small", null, t.length, "  ", i("cuts.countSuffix"))), t.map((e) => /* @__PURE__ */ o(c, {
 			key: `${e.a.o.id}-${e.b.o.id}`,
 			model: n,
 			cut: e,
-			project: o,
-			frames: c
+			project: s,
+			frames: l
 		})));
 	}));
 }
-function l(e) {
-	return i = e, a = e.React.createElement, e.React.Fragment, e.addStyle(r), {
+function u(e) {
+	return a = e, o = e.React.createElement, e.React.Fragment, e.addStyle(r), {
 		name: "cuts",
 		label: "接缝",
 		title: "同一条轨道里前后相接的画面：上一段的最后一帧和下一段的第一帧并排",
 		handles: ["image", "video"],
-		page: c,
+		page: l,
 		jumpPoints: (t, r) => n(e.util, t, r)
 	};
 }
 //#endregion
-export { l as default };
+export { u as default };
