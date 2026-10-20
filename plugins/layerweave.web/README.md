@@ -11,7 +11,7 @@ python -X utf8 -m layerweave.tool.builtin.view.plugins install layerweave.web
 python -X utf8 -m layerweave.tool.builtin.view.plugins info layerweave.web
 ```
 
-也可在顶栏“插件”中选装，或用 `install --file layerweave.web-1.0.0.zip` 离线安装。安装后刷新视图，点击顶栏“网页”。
+也可在顶栏“插件”中选装，或用 `install --file layerweave.web-1.0.1.zip` 离线安装。安装后刷新视图，点击顶栏“网页”。
 
 选择“网址”“HTML 源码”或“本地 HTML”，填写内容并点击“打开”。可重新载入当前来源；网址和本地文件可在外部浏览器打开，直接粘贴的 HTML 可下载为文件。
 
@@ -72,3 +72,7 @@ MCP 复用现有 `view_screenshot` 的 `view` 和 `params`，无需另装一套�
 ## 扩展
 
 源码在 `src/`，构建产物在 `dist/`；插件仅通过固定 SDK 类型和 `host` 使用宿主能力。本地文件入口是 `host.openDocument(file, resource_root?)`，返回临时 URL 和文件名。网页来源解析独立放在 `src/source.ts`，可在此扩充其它对象信息约定。
+
+## 许可证
+
+本插件采用 [MIT](LICENSE)，许可文件随离线 ZIP 提供。

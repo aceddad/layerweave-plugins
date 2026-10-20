@@ -19,3 +19,7 @@ python -m layerweave.tool.builtin.view.screenshot DATABASE 项目编号 输出.p
 视频取帧需要宿主可读取媒体；动态图像逐帧解码依赖浏览器 ImageDecoder，不能解码时页面说明原因。静态图像不伪装成动画；多个图层不会自动合成为视频。SVG 预览移除脚本和事件属性。
 
 1.1.0 起支持顶栏中英即时切换，需要视图 0.29.0+（host.api 3）。截图可加 `--lang en`；语言文件在 `locales/`，组件内使用 `host.useI18n()`，普通回调使用 `host.t()`。切换不重置页码、筛选或重新解码媒体。
+
+## 许可证
+
+本插件采用 [MIT](LICENSE)，许可文件随离线 ZIP 提供。

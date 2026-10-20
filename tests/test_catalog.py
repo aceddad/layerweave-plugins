@@ -2,6 +2,7 @@
 import hashlib
 import json
 import re
+import shutil
 import zipfile
 from pathlib import Path
 import tempfile
@@ -9,13 +10,25 @@ import unittest
 from unittest.mock import patch
 
 from layerweave.tool.builtin.view.plugins import plugin
-from tools.package_plugin import package
+from tools.package_plugin import package, TEXT_SUFFIXES
 from tools.build_index import build
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 class CatalogTests(unittest.TestCase):
+    def test_windows_line_endings_do_not_change_release_archive(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = ROOT / 'plugins/layerweave.web'
+            copied = root / 'web'
+            shutil.copytree(source, copied)
+            reference = package(source, root / 'reference').read_bytes()
+            for path in copied.rglob('*'):
+                if path.is_file() and (path.suffix.lower() in TEXT_SUFFIXES or path.name == 'LICENSE'):
+                    path.write_bytes(path.read_bytes().replace(b'\r\n', b'\n').replace(b'\n', b'\r\n'))
+            self.assertEqual(package(copied, root / 'windows').read_bytes(), reference)
+
     def test_reproducible_archives_and_install_all(self):
         with tempfile.TemporaryDirectory() as temporary:
             folder = Path(temporary)
@@ -33,6 +46,11 @@ class CatalogTests(unittest.TestCase):
                 self.assertEqual(result["status"], "installed")
                 self.assertIsNone(next(p for p in result["plugins"] if p["id"] == row["id"])["problem"])
                 self.assertTrue(plugin("info", row["id"], root=folder / "state")["usage"])
+                self.assertEqual(row["license"], "MIT")
+                with zipfile.ZipFile(path) as archive:
+                    manifest = json.loads(archive.read("plugin.json"))
+                    self.assertEqual(manifest["license"], "MIT")
+                    self.assertEqual(archive.read(manifest["license_file"]), (ROOT / "LICENSE").read_bytes())
 
     def test_old_host_selects_previous_release(self):
         with tempfile.TemporaryDirectory() as temporary, patch('layerweave.tool.builtin.view.plugin_manifest.current_version', return_value='0.28.1'):
@@ -54,9 +72,9 @@ class CatalogTests(unittest.TestCase):
             meta=json.loads((folder/'plugin.json').read_text(encoding='utf-8'))
             self.assertEqual(set(meta['params']),set(packs['en']['display']['params']))
         catalogue=json.loads((ROOT/'catalog/index.json').read_text(encoding='utf-8'))
-        self.assertEqual(len(catalogue['plugins']),7)
+        self.assertEqual(len(catalogue['plugins']),11)
         for row in catalogue['plugins']:
-            if row['version']=='1.1.0':
+            if row['version'] in ('1.1.0', '1.1.1'):
                 self.assertIn('en',row['localizations'])
                 self.assertNotIn('messages',row['localizations']['en'])
 

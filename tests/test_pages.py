@@ -107,7 +107,8 @@ class OfficialPageTests(unittest.TestCase):
 
     def test_cuts_and_paginated_screenshots(self):
         for name in ('cuts', 'assets'):
-            plugin('install', file=ROOT / f'catalog/releases/layerweave.{name}-1.1.0.zip', root=self.state)
+            version = json.loads((ROOT / f'plugins/layerweave.{name}/plugin.json').read_text(encoding='utf-8'))['version']
+            plugin('install', file=ROOT / f'catalog/releases/layerweave.{name}-{version}.zip', root=self.state)
         with browser(self.database, self.state, self.root / 'browser') as (tab, url):
             tab.call('Page.navigate', url=url + f'?project={self.project}&view=layerweave.cuts&begin=0&end=3&tree=0')
             self.wait(tab, "document.querySelectorAll('.cut').length===3")

@@ -11,7 +11,7 @@ python -X utf8 -m layerweave.tool.builtin.view.plugins install layerweave.web
 python -X utf8 -m layerweave.tool.builtin.view.plugins info layerweave.web
 ```
 
-Alternatively, use the host's plugin manager or `install --file layerweave.web-1.0.0.zip`. Refresh the view, then choose **Web** in the top bar.
+Alternatively, use the host's plugin manager or `install --file layerweave.web-1.0.1.zip`. Refresh the view, then choose **Web** in the top bar.
 
 Choose URL, HTML source, or Local HTML, enter a source, and select Open. Reload reopens the current source. URLs and local files have an external browser link; pasted HTML can be downloaded.
 
@@ -68,3 +68,7 @@ Screenshots wait for the frame's load event. Known errors such as missing files 
 ## Extend
 
 Sources live in `src/`, built output in `dist/`. The plugin uses the fixed SDK and host interface. `host.openDocument(file, resource_root?)` returns a temporary local URL and filename. Extend `src/source.ts` to recognize additional project information conventions.
+
+## License
+
+This plugin is licensed under [MIT](LICENSE). The license file is included in its ZIP archive.

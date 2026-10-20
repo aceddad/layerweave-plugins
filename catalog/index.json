@@ -57,6 +57,41 @@
     },
     {
       "publisher": "layerweave",
+      "name": "assets",
+      "kind": "view-plugin",
+      "version": "1.1.1",
+      "label": "一览",
+      "description": "按种类分页查看项目中的图片、视频、音频和文字。",
+      "requires": {
+        "view": ">=0.29.0",
+        "host_api": [
+          3
+        ]
+      },
+      "license": "MIT",
+      "localizations": {
+        "zh": {
+          "display": {
+            "label": "一览",
+            "description": "按种类分页查看项目中的图片、视频、音频和文字。"
+          }
+        },
+        "en": {
+          "display": {
+            "label": "Assets",
+            "description": "Browse project images, videos, audio and text by type, one page at a time."
+          }
+        }
+      },
+      "id": "layerweave.assets",
+      "archive": {
+        "url": "releases/layerweave.assets-1.1.1.zip",
+        "size": 6320,
+        "sha256": "aad0f174f4b860af1a4690ea4dc85c92c80c1cdbb55c7562fd73b4cb2cdeac15"
+      }
+    },
+    {
+      "publisher": "layerweave",
       "name": "cuts",
       "kind": "view-plugin",
       "version": "1.0.0",
@@ -107,6 +142,41 @@
         "url": "releases/layerweave.cuts-1.1.0.zip",
         "size": 6046,
         "sha256": "6115d064a8fa165ea1b36b72b53ee100fa525b373aebedb03d19fce92629db1c"
+      }
+    },
+    {
+      "publisher": "layerweave",
+      "name": "cuts",
+      "kind": "view-plugin",
+      "version": "1.1.1",
+      "label": "接缝",
+      "description": "并排查看同一轨道前后相接的画面，沿接缝跳转。",
+      "requires": {
+        "view": ">=0.29.0",
+        "host_api": [
+          3
+        ]
+      },
+      "license": "MIT",
+      "localizations": {
+        "zh": {
+          "display": {
+            "label": "接缝",
+            "description": "并排查看同一轨道前后相接的画面，沿接缝跳转。"
+          }
+        },
+        "en": {
+          "display": {
+            "label": "Cuts",
+            "description": "Compare adjacent visuals on a track and jump between cuts."
+          }
+        }
+      },
+      "id": "layerweave.cuts",
+      "archive": {
+        "url": "releases/layerweave.cuts-1.1.1.zip",
+        "size": 6930,
+        "sha256": "7739bcfb31f9bdc111ea9982b353ab20ef442facf8d1632ece25a2d722fcd41f"
       }
     },
     {
@@ -165,6 +235,41 @@
     },
     {
       "publisher": "layerweave",
+      "name": "preview",
+      "kind": "view-plugin",
+      "version": "1.1.1",
+      "label": "预览",
+      "description": "按时间取帧，分页检查视频、动态 SVG 和动态图像。",
+      "requires": {
+        "view": ">=0.29.0",
+        "host_api": [
+          3
+        ]
+      },
+      "license": "MIT",
+      "localizations": {
+        "zh": {
+          "display": {
+            "label": "预览",
+            "description": "按时间取帧，分页检查视频、动态 SVG 和动态图像。"
+          }
+        },
+        "en": {
+          "display": {
+            "label": "Frame Preview",
+            "description": "Inspect frames of videos, animated SVGs and animated images by time."
+          }
+        }
+      },
+      "id": "layerweave.preview",
+      "archive": {
+        "url": "releases/layerweave.preview-1.1.1.zip",
+        "size": 11106,
+        "sha256": "3ace04505c98035555bf0db190dbc5fb426019f6a8b39ae02e5c1c1ae53a0b9d"
+      }
+    },
+    {
+      "publisher": "layerweave",
       "name": "web",
       "kind": "view-plugin",
       "version": "1.0.0",
@@ -195,6 +300,41 @@
         "url": "releases/layerweave.web-1.0.0.zip",
         "size": 10541,
         "sha256": "44132acebe9ed657e95a4dcd530e235044f1b1f243fe973194d2135443c529bd"
+      }
+    },
+    {
+      "publisher": "layerweave",
+      "name": "web",
+      "kind": "view-plugin",
+      "version": "1.0.1",
+      "label": "网页",
+      "description": "在独立页面查看网址、HTML 源码和本地 HTML，按需读取项目中的网页引用。",
+      "requires": {
+        "view": ">=0.31.0",
+        "host_api": [
+          3
+        ]
+      },
+      "license": "MIT",
+      "localizations": {
+        "zh": {
+          "display": {
+            "label": "网页",
+            "description": "在独立页面查看网址、HTML 源码和本地 HTML，按需读取项目中的网页引用。"
+          }
+        },
+        "en": {
+          "display": {
+            "label": "Web",
+            "description": "Open URLs, HTML source and local HTML files in a separate page."
+          }
+        }
+      },
+      "id": "layerweave.web",
+      "archive": {
+        "url": "releases/layerweave.web-1.0.1.zip",
+        "size": 11417,
+        "sha256": "2cca11d819e237a5d217111f84cdb8dbc60c5e28ea2707861b4d226f79ff5ab9"
       }
     }
   ]

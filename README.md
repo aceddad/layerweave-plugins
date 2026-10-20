@@ -1,5 +1,7 @@
 # LayerWeave 官方视图插件
 
+**简体中文** | [English](README.en.md)
+
 这是独立于宿主的选装插件仓库。安装 LayerWeave 不会自动安装这里的插件；零插件也能使用画布。当前发布协议 v1，运行接口为 `host.api = 3`。
 
 | 插件 | 用途 |
@@ -11,12 +13,12 @@
 
 ## 选装
 
-需要带插件管理器的 LayerWeave 视图。最初三个插件的 1.1.0 提供中英语言包，需要视图 0.29.0+，旧宿主可选择其 1.0.0；网页插件的 1.0.0 已提供中英界面，需要视图 0.31.0+：
+需要带插件管理器的 LayerWeave 视图。一览、接缝和预览的当前版本为 1.1.1，提供中英语言包，需要视图 0.29.0+，旧宿主可选择其 1.0.0；网页插件的当前版本为 1.0.1，提供中英界面，需要视图 0.31.0+：
 
 ```sh
-python -m layerweave.tool.builtin.view.plugins market
-python -m layerweave.tool.builtin.view.plugins info layerweave.preview
-python -m layerweave.tool.builtin.view.plugins install layerweave.preview
+python -X utf8 -m layerweave.tool.builtin.view.plugins market
+python -X utf8 -m layerweave.tool.builtin.view.plugins info layerweave.preview
+python -X utf8 -m layerweave.tool.builtin.view.plugins install layerweave.preview
 ```
 
 网页顶栏「插件」也能查询、安装、开关和卸载。想换目录时，用 `--catalog URL或本机index.json`；离线包用 `install --file 路径.zip`。更新只在明确执行 `update` 时发生。
@@ -30,16 +32,16 @@ python -m layerweave.tool.builtin.view.plugins install layerweave.preview
 ```sh
 npm ci
 npm run build
-python tools/package_plugin.py
-python tools/build_index.py
+python -X utf8 tools/package_plugin.py
+python -X utf8 tools/build_index.py
 ```
 
-构建与发布步骤分别负责：类型检查和单元测试 → 每个插件独立构建 dist → 每个版本生成 ZIP → 从 ZIP 生成静态目录。原样再次打包得到相同字节；已有版本内容改变会拒绝覆盖，需要升插件自己的 version。第一次正式发布前的本地试包请输出到 scratch，例如 `python tools/package_plugin.py --output scratch/releases`。
+构建与发布步骤分别负责：类型检查和单元测试 → 每个插件独立构建 dist → 每个版本生成 ZIP → 从 ZIP 生成静态目录。原样再次打包得到相同字节；已有版本内容改变会拒绝覆盖，需要升插件自己的 version。第一次正式发布前的本地试包请输出到 scratch，例如 `python -X utf8 tools/package_plugin.py --output scratch/releases`。
 
 开发时使用已安装的 LayerWeave：
 
 ```sh
-python -m layerweave.tool.builtin.view.plugins add plugins/layerweave.preview
+python -X utf8 -m layerweave.tool.builtin.view.plugins add plugins/layerweave.preview
 ```
 
 插件使用 `host.React`，只从 `sdk/host-api-3` 导入类型。接口快照由宿主构建脚本生成，`snapshot.json` 记录其宿主版本；更新快照时先核对兼容范围。SDK 只有 `.d.ts`，不提供可导入的宿主实现。
@@ -73,3 +75,7 @@ Python 测试需要先在所用解释器中安装带视图的 LayerWeave，例�
 | `catalog/releases/` | 不可变的版本 ZIP |
 | `tools/` | 构建、打包、目录生成脚本 |
 | `tests/` | 发布与真实宿主协作测试 |
+
+## 许可证
+
+官方插件源码采用 [MIT](LICENSE)。当前各插件的 manifest 声明 license 与 license_file，新版本 ZIP 均携带同一许可文本。较早的 ZIP 保留原字节；补充许可不原地覆盖旧版本。宿主、外部服务与项目素材遵循各自说明。

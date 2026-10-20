@@ -63,7 +63,9 @@ class PreviewTests(unittest.TestCase):
                 ids = {name: write.create("object", {"layer": layer, "begin": i * 10, "end": i * 10 + 2, "config_ref": "objects/image.toml",
                                                      "information": {"source": str(root / name)}}, project_id=project)["id"]
                        for i, name in enumerate(("move.svg", "blink.gif"))}
-            plugin("install", file=Path(__file__).resolve().parents[1] / "catalog/releases/layerweave.preview-1.1.0.zip", root=root / "state")                         # 测试只安装到临时目录
+            repository = Path(__file__).resolve().parents[1]
+            version = json.loads((repository / "plugins/layerweave.preview/plugin.json").read_text(encoding="utf-8"))["version"]
+            plugin("install", file=repository / f"catalog/releases/layerweave.preview-{version}.zip", root=root / "state")  # 测试只安装到临时目录
             server, url = make_server(database, state_root=root / "state", record_state=False)
             threading.Thread(target=server.serve_forever, daemon=True).start()
             profile = root / "browser"

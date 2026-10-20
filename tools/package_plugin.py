@@ -7,6 +7,7 @@ import zipfile
 from io import BytesIO
 
 ROOT = Path(__file__).resolve().parents[1]
+TEXT_SUFFIXES = {".js", ".mjs", ".css", ".json", ".md", ".txt", ".svg", ".html"}
 
 
 def package(folder, output):
@@ -44,7 +45,11 @@ def package(folder, output):
             info = zipfile.ZipInfo(path.relative_to(folder).as_posix(), date_time=(1980, 1, 1, 0, 0, 0))
             info.compress_type = zipfile.ZIP_DEFLATED
             info.external_attr = 0o100644 << 16
-            archive.writestr(info, path.read_bytes())
+            content = path.read_bytes()
+            # Match .gitattributes even when a Windows build or editor wrote CRLF.
+            if path.suffix.lower() in TEXT_SUFFIXES or path.name in {"LICENSE", "COPYING", "NOTICE"}:
+                content = content.replace(b"\r\n", b"\n")
+            archive.writestr(info, content)
     output.mkdir(parents=True, exist_ok=True)
     destination = output / f"{data['publisher']}.{data['name']}-{data['version']}.zip"
     content = body.getvalue()

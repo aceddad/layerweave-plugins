@@ -3,21 +3,51 @@
   "kind": "view-plugin",
   "publisher": "layerweave",
   "name": "web",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "label": "网页",
   "description": "在独立页面查看网址、HTML 源码和本地 HTML，按需读取项目中的网页引用。",
-  "requires": {"view": ">=0.31.0", "host_api": [3]},
+  "requires": {
+    "view": ">=0.31.0",
+    "host_api": [
+      3
+    ]
+  },
   "entry": "dist/plugin.js",
   "usage": "README.md",
-  "slots": ["page"],
+  "slots": [
+    "page"
+  ],
   "params": {
-    "url": {"type": "string", "description": "要打开的 HTTP 或 HTTPS 地址。与 html、file、object 四选一。"},
-    "html": {"type": "string", "description": "直接显示的 HTML 源码。较长或多文件页面建议使用 file。"},
-    "file": {"type": "string", "description": "本地 .html/.htm 文件。相对路径以数据库所在目录为基准。"},
-    "resource_root": {"type": "string", "description": "本地页面的资源根目录，默认为 HTML 所在目录；允许目录内的相对引用。"},
-    "object": {"type": "integer", "description": "当前项目对象编号，从 information.html、url 或 source 获取网页来源。"}
+    "url": {
+      "type": "string",
+      "description": "要打开的 HTTP 或 HTTPS 地址。与 html、file、object 四选一。"
+    },
+    "html": {
+      "type": "string",
+      "description": "直接显示的 HTML 源码。较长或多文件页面建议使用 file。"
+    },
+    "file": {
+      "type": "string",
+      "description": "本地 .html/.htm 文件。相对路径以数据库所在目录为基准。"
+    },
+    "resource_root": {
+      "type": "string",
+      "description": "本地页面的资源根目录，默认为 HTML 所在目录；允许目录内的相对引用。"
+    },
+    "object": {
+      "type": "integer",
+      "description": "当前项目对象编号，从 information.html、url 或 source 获取网页来源。"
+    }
   },
   "author": "LayerWeave",
-  "languages": ["zh", "en"],
-  "locales": {"zh": "locales/zh.json", "en": "locales/en.json"}
+  "languages": [
+    "zh",
+    "en"
+  ],
+  "locales": {
+    "zh": "locales/zh.json",
+    "en": "locales/en.json"
+  },
+  "license": "MIT",
+  "license_file": "LICENSE"
 }

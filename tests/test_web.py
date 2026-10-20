@@ -18,7 +18,8 @@ from layerweave.tool.builtin.view.screenshot import capture, find_browser
 from test_pages import browser, png
 
 ROOT = Path(__file__).resolve().parents[1]
-WEB_PACKAGE = Path(os.environ.get("LAYERWEAVE_WEB_PACKAGE", ROOT/"catalog/releases/layerweave.web-1.0.0.zip"))
+WEB_VERSION = json.loads((ROOT / "plugins/layerweave.web/plugin.json").read_text(encoding="utf-8"))["version"]
+WEB_PACKAGE = Path(os.environ.get("LAYERWEAVE_WEB_PACKAGE", ROOT/f"catalog/releases/layerweave.web-{WEB_VERSION}.zip"))
 
 
 @unittest.skipIf(find_browser() is None, "No local browser")

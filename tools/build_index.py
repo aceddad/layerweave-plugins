@@ -20,6 +20,8 @@ def build(folder):
                 display = json.loads(archive.read(relative)).get("display", {})
                 localizations[lang] = {"display": {k: display[k] for k in ("label", "description") if k in display}}
         row = {key: meta[key] for key in FIELDS}
+        if meta.get("license"):
+            row["license"] = meta["license"]
         if localizations:
             row["localizations"] = localizations
         row["id"] = meta["publisher"] + "." + meta["name"]
