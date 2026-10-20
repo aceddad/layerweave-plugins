@@ -7,10 +7,11 @@
 | [layerweave.assets · 一览](plugins/layerweave.assets/README.md) | 按种类分页查找图片、视频、音频和文字 |
 | [layerweave.cuts · 接缝](plugins/layerweave.cuts/README.md) | 检查前后画面衔接，沿接缝跳转 |
 | [layerweave.preview · 预览](plugins/layerweave.preview/README.md) | 检查视频和动态图像的逐帧结果 |
+| [layerweave.web · 网页](plugins/layerweave.web/README.md) | 在独立页面打开网址、HTML 源码和本地 HTML 文件 |
 
 ## 选装
 
-需要带插件管理器的 LayerWeave 视图 0.28.0 或更新兼容版本。插件 1.1.0 提供中英语言包，需要视图 0.29.0+；旧宿主仍可从目录选择 1.0.0：
+需要带插件管理器的 LayerWeave 视图。最初三个插件的 1.1.0 提供中英语言包，需要视图 0.29.0+，旧宿主可选择其 1.0.0；网页插件的 1.0.0 已提供中英界面，需要视图 0.31.0+：
 
 ```sh
 python -m layerweave.tool.builtin.view.plugins market

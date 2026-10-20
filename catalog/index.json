@@ -162,6 +162,40 @@
         "size": 10223,
         "sha256": "c47a70d818d9e0391940a7c36ce3538897ee59fcb55cf6e051378b7dd913aec8"
       }
+    },
+    {
+      "publisher": "layerweave",
+      "name": "web",
+      "kind": "view-plugin",
+      "version": "1.0.0",
+      "label": "网页",
+      "description": "在独立页面查看网址、HTML 源码和本地 HTML，按需读取项目中的网页引用。",
+      "requires": {
+        "view": ">=0.31.0",
+        "host_api": [
+          3
+        ]
+      },
+      "localizations": {
+        "zh": {
+          "display": {
+            "label": "网页",
+            "description": "在独立页面查看网址、HTML 源码和本地 HTML，按需读取项目中的网页引用。"
+          }
+        },
+        "en": {
+          "display": {
+            "label": "Web",
+            "description": "Open URLs, HTML source and local HTML files in a separate page."
+          }
+        }
+      },
+      "id": "layerweave.web",
+      "archive": {
+        "url": "releases/layerweave.web-1.0.0.zip",
+        "size": 10541,
+        "sha256": "44132acebe9ed657e95a4dcd530e235044f1b1f243fe973194d2135443c529bd"
+      }
     }
   ]
 }

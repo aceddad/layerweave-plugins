@@ -1,0 +1,45 @@
+{
+  "messages": {
+    "plugin.label": "网页",
+    "plugin.title": "查看网址、HTML 源码或本地 HTML 文件。",
+    "web.source": "来源",
+    "web.url": "网址",
+    "web.html": "HTML 源码",
+    "web.file": "本地 HTML",
+    "web.address": "地址或文件路径",
+    "web.open": "打开",
+    "web.reload": "重新载入",
+    "web.external": "在外部浏览器打开",
+    "web.download": "下载 HTML",
+    "web.resourceRoot": "资源目录",
+    "web.projectObject": "项目对象",
+    "web.choose": "选择网页引用…",
+    "web.unnamed": "未命名",
+    "web.loading": "正在打开…",
+    "web.opened": "网页窗口已打开",
+    "web.urlHint": "https://example.org 或本机服务地址",
+    "web.fileHint": "report/index.html 或完整文件路径",
+    "web.htmlHint": "<!doctype html><html>…</html>",
+    "web.rootHint": "留空使用 HTML 所在目录",
+    "web.embedHint": "若网站禁止嵌入或无法显示，可在外部浏览器打开。",
+    "web.start": "输入网址、粘贴 HTML 或填写本地 HTML 路径，再点击“打开”。也可以选择项目中已有的网页引用。",
+    "web.emptySource": "请先填写网页来源。",
+    "web.httpOnly": "网址需以 http:// 或 https:// 开头；本地文件请选择“本地 HTML”。",
+    "web.oneSource": "url、html、file、object 每次只指定一个。",
+    "web.objectMissing": "找不到指定对象，或它没有可查看的网页来源。",
+    "web.loadError": "网页无法载入；可尝试在外部浏览器打开。"
+  },
+  "display": {
+    "label": "网页",
+    "title": "查看网址、HTML 源码或本地 HTML 文件。",
+    "description": "在独立页面查看网址、HTML 源码和本地 HTML，按需读取项目中的网页引用。",
+    "params": {
+      "url": "要打开的 HTTP 或 HTTPS 地址。与 html、file、object 四选一。",
+      "html": "直接显示的 HTML 源码。较长或多文件页面建议使用 file。",
+      "file": "本地 .html/.htm 文件。相对路径以数据库所在目录为基准。",
+      "resource_root": "本地页面的资源根目录，默认为 HTML 所在目录；允许目录内的相对引用。",
+      "object": "当前项目对象编号，从 information.html、url 或 source 获取网页来源。"
+    }
+  },
+  "usage": "README.md"
+}

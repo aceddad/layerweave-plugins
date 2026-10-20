@@ -1,0 +1,45 @@
+{
+  "messages": {
+    "plugin.label": "Web",
+    "plugin.title": "View a URL, HTML source, or a local HTML file.",
+    "web.source": "Source",
+    "web.url": "URL",
+    "web.html": "HTML source",
+    "web.file": "Local HTML",
+    "web.address": "Address or file path",
+    "web.open": "Open",
+    "web.reload": "Reload",
+    "web.external": "Open in browser",
+    "web.download": "Download HTML",
+    "web.resourceRoot": "Resource directory",
+    "web.projectObject": "Project object",
+    "web.choose": "Choose a page reference…",
+    "web.unnamed": "Untitled",
+    "web.loading": "Opening…",
+    "web.opened": "Page frame opened",
+    "web.urlHint": "https://example.org or a local server URL",
+    "web.fileHint": "report/index.html or an absolute file path",
+    "web.htmlHint": "<!doctype html><html>…</html>",
+    "web.rootHint": "Defaults to the HTML file's directory",
+    "web.embedHint": "If the site blocks embedding or does not display, open it in your browser.",
+    "web.start": "Enter a URL, paste HTML, or provide a local HTML path, then choose Open. You can also select a page reference from the project.",
+    "web.emptySource": "Enter a page source first.",
+    "web.httpOnly": "Use an http:// or https:// URL. For local files, choose Local HTML.",
+    "web.oneSource": "Specify only one of url, html, file, or object.",
+    "web.objectMissing": "The object was not found or has no supported page source.",
+    "web.loadError": "The page could not be loaded. Try opening it in your browser."
+  },
+  "display": {
+    "label": "Web",
+    "title": "View a URL, HTML source, or a local HTML file.",
+    "description": "Open URLs, HTML source and local HTML files in a separate page.",
+    "params": {
+      "url": "HTTP or HTTPS address. Choose one of url, html, file, or object.",
+      "html": "HTML source to render. Prefer file for long or multi-file pages.",
+      "file": "Local .html/.htm file. Relative paths start at the database directory.",
+      "resource_root": "Resource directory for a local page; defaults to the HTML directory. Relative references stay within it.",
+      "object": "Object ID in the current project; reads information.html, url, or source."
+    }
+  },
+  "usage": "README.en.md"
+}

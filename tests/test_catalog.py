@@ -25,7 +25,7 @@ class CatalogTests(unittest.TestCase):
                 self.assertEqual(package(source, folder / "catalog/releases"), path)
             catalogue = build(folder / "catalog")
             data = json.loads(catalogue.read_text(encoding="utf-8"))
-            self.assertEqual(len(data["plugins"]), 3)
+            self.assertEqual(len(data["plugins"]), 4)
             for row in data["plugins"]:
                 path = catalogue.parent / row["archive"]["url"]
                 self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), row["archive"]["sha256"])
@@ -37,8 +37,9 @@ class CatalogTests(unittest.TestCase):
     def test_old_host_selects_previous_release(self):
         with tempfile.TemporaryDirectory() as temporary, patch('layerweave.tool.builtin.view.plugin_manifest.current_version', return_value='0.28.1'):
             result=plugin('market',catalog=ROOT/'catalog/index.json',root=Path(temporary)/'state')
-            self.assertEqual(len(result['items']),3)
-            self.assertTrue(all(row['version']=='1.0.0' and row['compatible'] for row in result['items']))
+            self.assertEqual(len(result['items']),4)
+            self.assertTrue(all(row['version']=='1.0.0' and row['compatible'] for row in result['items'] if row['id'] != 'layerweave.web'))
+            self.assertFalse(next(row for row in result['items'] if row['id']=='layerweave.web')['compatible'])
 
     def test_language_resources_are_complete_and_packed(self):
         placeholders=lambda text: sorted(re.findall(r"\{(\w+)\}",text))
@@ -47,12 +48,13 @@ class CatalogTests(unittest.TestCase):
             self.assertEqual(set(packs['zh']['messages']),set(packs['en']['messages']))
             for key,text in packs['zh']['messages'].items():
                 self.assertEqual(placeholders(text),placeholders(packs['en']['messages'][key]),key)
-            with zipfile.ZipFile(ROOT/'catalog/releases'/f'{folder.name}-1.1.0.zip') as z:
+            meta=json.loads((folder/'plugin.json').read_text(encoding='utf-8'))
+            with zipfile.ZipFile(ROOT/'catalog/releases'/f'{folder.name}-{meta["version"]}.zip') as z:
                 self.assertIn('locales/en.json',z.namelist());self.assertIn('README.en.md',z.namelist())
             meta=json.loads((folder/'plugin.json').read_text(encoding='utf-8'))
             self.assertEqual(set(meta['params']),set(packs['en']['display']['params']))
         catalogue=json.loads((ROOT/'catalog/index.json').read_text(encoding='utf-8'))
-        self.assertEqual(len(catalogue['plugins']),6)
+        self.assertEqual(len(catalogue['plugins']),7)
         for row in catalogue['plugins']:
             if row['version']=='1.1.0':
                 self.assertIn('en',row['localizations'])
