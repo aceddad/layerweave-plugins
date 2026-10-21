@@ -2,6 +2,8 @@
 
 **简体中文** | [English](README.en.md)
 
+[GitHub](https://github.com/aceddad/layerweave-plugins) · [Gitee](https://gitee.com/emotion1354414/layerweave-plugins) · [LayerWeave 宿主](https://github.com/aceddad/LayerWeave/tree/visualization)
+
 这是独立于宿主的选装插件仓库。安装 LayerWeave 不会自动安装这里的插件；零插件也能使用画布。当前发布协议 v1，运行接口为 `host.api = 3`。
 
 | 插件 | 用途 |

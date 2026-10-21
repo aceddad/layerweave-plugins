@@ -2,6 +2,8 @@
 
 [简体中文](README.md) | **English**
 
+[GitHub](https://github.com/aceddad/layerweave-plugins) · [Gitee](https://gitee.com/emotion1354414/layerweave-plugins) · [LayerWeave host](https://github.com/aceddad/LayerWeave/tree/visualization)
+
 Optional plugins for the LayerWeave web view. Installing the host does not install these plugins; its canvas works without them. This repository uses plugin format 1 and host.api 3.
 
 | Plugin | Purpose | Version | Required view |
