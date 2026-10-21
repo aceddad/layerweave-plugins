@@ -51,6 +51,10 @@ python -X utf8 -B -m unittest discover -s tests -v
 
 Python acceptance tests require an installed LayerWeave host. Browser checks use Chrome, Edge or Chromium; media checks may use FFmpeg. They use temporary projects and plugin state.
 
+## AI-assisted development
+
+The maintainer leads the project's design and maintenance. Claude did the main development of the Assets, Cuts, and Preview plugins. Astra (Codex) added the Web plugin and helped with integration, testing, and release preparation.
+
 ## License
 
 Official plugin source code uses [MIT](LICENSE). Current manifests declare license and license_file, and their ZIP archives include the license. Earlier archives retain their original bytes. The host, external services and project media retain their respective terms.
