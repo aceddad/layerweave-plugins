@@ -17,7 +17,7 @@ All four follow the host's Chinese/English selector. Earlier versions remain in 
 
 ## Install
 
-Install a complete LayerWeave host first. Run from its Python environment:
+Install a [complete LayerWeave host](https://github.com/aceddad/LayerWeave/releases/tag/v0.7.8) first. It uses this repository's [GitHub catalog](https://raw.githubusercontent.com/aceddad/layerweave-plugins/main/catalog/index.json) by default; offline ZIPs are in [catalog/releases](catalog/releases). Run from its Python environment:
 
 ```powershell
 python -X utf8 -m layerweave.tool.builtin.view.plugins market
@@ -40,7 +40,7 @@ python -X utf8 tools/build_index.py
 
 Each directory under plugins contains its manifest, source, dist, localized guides and license. Packaging produces deterministic ZIP files; a changed archive cannot replace an existing version. Increase that plugin's version when its files change. Use `--output scratch/releases` for trial packages. The catalog only indexes ZIP files under catalog/releases; unfinished material is excluded.
 
-Test a development folder with `python -X utf8 -m layerweave.tool.builtin.view.plugins add plugins/layerweave.preview`. The [host plugin documentation](https://gitee.com/emotion1354414/layer-weave/blob/visualization/src/layerweave/tool/builtin/view/PLUGINS.md) describes the manifest and runtime API. Each plugin's own guide documents its parameters and examples.
+Test a development folder with `python -X utf8 -m layerweave.tool.builtin.view.plugins add plugins/layerweave.preview`. The [host plugin documentation](https://github.com/aceddad/LayerWeave/blob/visualization/src/layerweave/tool/builtin/view/PLUGINS.md) describes the manifest and runtime API. Each plugin's own guide documents its parameters and examples.
 
 ## Check
 

@@ -15,7 +15,7 @@
 
 ## 选装
 
-需要带插件管理器的 LayerWeave 视图。一览、接缝和预览的当前版本为 1.1.1，提供中英语言包，需要视图 0.29.0+，旧宿主可选择其 1.0.0；网页插件的当前版本为 1.0.1，提供中英界面，需要视图 0.31.0+：
+需要带插件管理器的 [LayerWeave 视图](https://github.com/aceddad/LayerWeave/releases/tag/v0.7.8)。默认使用本仓库的 [GitHub 插件目录](https://raw.githubusercontent.com/aceddad/layerweave-plugins/main/catalog/index.json)，离线 ZIP 见 [catalog/releases](catalog/releases)。一览、接缝和预览的当前版本为 1.1.1，提供中英语言包，需要视图 0.29.0+，旧宿主可选择其 1.0.0；网页插件的当前版本为 1.0.1，提供中英界面，需要视图 0.31.0+：
 
 ```sh
 python -X utf8 -m layerweave.tool.builtin.view.plugins market
@@ -25,7 +25,7 @@ python -X utf8 -m layerweave.tool.builtin.view.plugins install layerweave.previe
 
 网页顶栏「插件」也能查询、安装、开关和卸载。想换目录时，用 `--catalog URL或本机index.json`；离线包用 `install --file 路径.zip`。更新只在明确执行 `update` 时发生。
 
-完整协议和宿主接口边界见[视图插件文档](https://gitee.com/emotion1354414/layer-weave/blob/visualization/src/layerweave/tool/builtin/view/PLUGINS.md)。每个插件的 manifest 和 README 是它自身用途与参数的主要说明。
+完整协议和宿主接口边界见[视图插件文档](https://github.com/aceddad/LayerWeave/blob/visualization/src/layerweave/tool/builtin/view/PLUGINS.md)。每个插件的 manifest 和 README 是它自身用途与参数的主要说明。
 
 ## 开发与发布
 
@@ -56,7 +56,7 @@ python -X utf8 -m layerweave.tool.builtin.view.plugins add plugins/layerweave.pr
 
 三个官方插件的 1.1.0 跟随宿主顶栏切换中文 / English，切换保留当前页、筛选和已解码帧。各插件的 `locales/zh.json` 与 `en.json` 保存界面词条、显示元数据和使用说明路径。原 manifest 身份和参数约定保持不变。
 
-组件内用 `host.useI18n()`，普通回调用 `host.t()`；不要把 locale 加进媒体解码 effect 的依赖。自己的词典缺英文时回退中文，未声明语言包的旧插件继续显示原文。完整格式见[语言包协议](https://gitee.com/emotion1354414/layer-weave/blob/visualization/src/layerweave/tool/builtin/view/LANGUAGES.md)。打包脚本只收集明确声明的语言文件和说明。
+组件内用 `host.useI18n()`，普通回调用 `host.t()`；不要把 locale 加进媒体解码 effect 的依赖。自己的词典缺英文时回退中文，未声明语言包的旧插件继续显示原文。完整格式见[语言包协议](https://github.com/aceddad/LayerWeave/blob/visualization/src/layerweave/tool/builtin/view/LANGUAGES.md)。打包脚本只收集明确声明的语言文件和说明。
 
 ## 验收
 
